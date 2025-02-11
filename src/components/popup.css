@@ -1,0 +1,136 @@
+.popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  animation: fadeIn 0.4s ease-in;
+  backdrop-filter: blur(5px);
+}
+
+.popup-content {
+  background: linear-gradient(to bottom right, #ffffff, #f8f9fa);
+  padding: 30px;
+  border-radius: 20px;
+  width: 90vw;
+  max-width: 400px;
+  position: relative;
+  animation: slideIn 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.popup-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  padding-bottom: 15px;
+  border-bottom: 2px solid #f0f0f0;
+}
+
+.popup-header h2 {
+  margin: 0;
+  color: #6831c2;
+  font-size: 28px;
+  font-weight: 700;
+  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+}
+
+.close-button {
+  background: none;
+  border: none;
+  font-size: 28px;
+  cursor: pointer;
+  color: #666;
+  padding: 8px;
+  min-width: auto;
+  transition: all 0.3s ease;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.close-button:hover {
+  background-color: rgba(104, 49, 194, 0.1);
+  color: #6831c2;
+  transform: rotate(90deg);
+}
+
+.popup-body {
+  text-align: center;
+  padding: 10px 0;
+}
+
+.popup-body p {
+  font-size: 20px;
+  color: #333;
+  margin-bottom: 25px;
+  line-height: 1.5;
+}
+
+.popup-image {
+  width: 180px;
+  height: auto;
+  margin: 15px auto;
+  border-radius: 10px;
+  animation: bounce 2s infinite;
+}
+
+@keyframes fadeIn {
+  from { 
+    opacity: 0;
+    backdrop-filter: blur(0);
+  }
+  to { 
+    opacity: 1;
+    backdrop-filter: blur(5px);
+  }
+}
+
+@keyframes slideIn {
+  0% {
+    transform: translateY(-100px) scale(0.8);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@media (max-width: 480px) {
+  .popup-content {
+    width: 85vw;
+    padding: 20px;
+  }
+
+  .popup-header h2 {
+    font-size: 24px;
+  }
+
+  .popup-body p {
+    font-size: 18px;
+  }
+
+  .popup-image {
+    width: 150px;
+  }
+}

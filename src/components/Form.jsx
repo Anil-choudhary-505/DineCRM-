@@ -1,6 +1,7 @@
 import "./style.css";
 import { useState } from "react";
 import axios from "axios";
+import Popup from "./Popup";
 /* 
 -> formData → Stores all the user input fields.
 -> setFormData → Updates the input values when the user types.
@@ -8,6 +9,9 @@ import axios from "axios";
 -> visitTime → Stores multiple selected checkboxes in an array.
 */
 const Form = () => {
+  // for popup content
+  const [showPopup, setShowPopup] = useState(false);
+
   const [formData, setFormData] = useState({
     fullname: "",
     contact: "",
@@ -20,7 +24,7 @@ const Form = () => {
   });
 
   const [message, setMessage] = useState(""); // State to show response message
- 
+
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
     if (type === "checkbox") {
@@ -40,6 +44,8 @@ const Form = () => {
 
     try {
       const response = await axios.post("http://localhost:5000/submit-form", formData);
+      console.log(formData);
+      setShowPopup(true);
       setMessage(response.data.message); // Show success message
       setFormData({
         fullname: "",
@@ -59,126 +65,150 @@ const Form = () => {
 
   return (
     <div className="container">
-      <h1>Scan, Fill, Enjoy 🎉 A Delicious Surprise is Waiting for You</h1>
+      <h1>Scan, Fill, Enjoy 🎉</h1>
+      <p className="subtitle">A Delicious Surprise is Waiting for You</p>
+
       <form id="customerForm" onSubmit={handleSubmit}>
-        <label htmlFor="fullname">Name</label>
-        <input
-          required
-          type="text"
-          id="fullname"
-          name="fullname"
-          placeholder="Enter Full Name"
-          value={formData.fullname}
-          onChange={handleChange}
-        />
+        <div className="form-group">
+          <label htmlFor="fullname">Full Name</label>
+          <input
+            required
+            type="text"
+            id="fullname"
+            name="fullname"
+            placeholder="Enter your full name"
+            value={formData.fullname}
+            onChange={handleChange}
+          />
+        </div>
 
-        <label htmlFor="contact">Contact</label>
-        <input
-          required
-          type="tel"
-          id="contact"
-          name="contact"
-          placeholder="Enter Phone Number"
-          value={formData.contact}
-          onChange={handleChange}
-        />
+        <div className="form-group">
+          <label htmlFor="contact">Contact Number</label>
+          <input
+            required
+            type="tel"
+            id="contact"
+            name="contact"
+            placeholder="Enter your phone number"
+            value={formData.contact}
+            onChange={handleChange}
+          />
+        </div>
 
-        <label htmlFor="email">Email</label>
-        <input
-          required
-          type="email"
-          id="email"
-          name="email"
-          value={formData.email}
-          onChange={handleChange}
-        />
+        <div className="form-group">
+          <label htmlFor="email">Email Address</label>
+          <input
+            required
+            type="email"
+            id="email"
+            name="email"
+            placeholder="Enter your email address"
+            value={formData.email}
+            onChange={handleChange}
+          />
+        </div>
 
-        <label>Gender</label>
-        <input
-          required
-          type="radio"
-          id="male"
-          name="gender"
-          value="male"
-          checked={formData.gender === "male"}
-          onChange={handleChange}
-        />
-        <label htmlFor="male">Male</label>
+        <div className="form-group radio-group">
+          <label className="group-label">Gender</label>
+          <div className="radio-options">
+            <div className="radio-item">
+              <input
+                required
+                type="radio"
+                id="male"
+                name="gender"
+                value="male"
+                checked={formData.gender === "male"}
+                onChange={handleChange}
+              />
+              <label htmlFor="male">Male</label>
+            </div>
+            <div className="radio-item">
+              <input
+                required
+                type="radio"
+                id="female"
+                name="gender"
+                value="female"
+                checked={formData.gender === "female"}
+                onChange={handleChange}
+              />
+              <label htmlFor="female">Female</label>
+            </div>
+          </div>
+        </div>
 
-        <input
-          required
-          type="radio"
-          id="female"
-          name="gender"
-          value="female"
-          checked={formData.gender === "female"}
-          onChange={handleChange}
-        />
-        <label htmlFor="female">Female</label>
-        <label htmlFor="diet">Dietary Preferences</label>
-        <select
-          id="diet"
-          name="diet"
-          value={formData.diet}
-          onChange={handleChange}
-        >
-          <option value="">Select</option>
-          <option value="veg">Veg</option>
-          <option value="non-veg">Non-Veg</option>
-        </select>
+        <div className="form-group">
+          <label htmlFor="diet">Dietary Preferences</label>
+          <select
+            id="diet"
+            name="diet"
+            value={formData.diet}
+            onChange={handleChange}
+            required
+          >
+            <option value="">Select your preference</option>
+            <option value="veg">Vegetarian</option>
+            <option value="non-veg">Non-Vegetarian</option>
+          </select>
+        </div>
 
-        <label htmlFor="birthday">Birthday</label>
-        <input
-          required
-          type="date"
-          id="birthday"
-          name="birthday"
-          value={formData.birthday}
-          onChange={handleChange}
-        />
+        <div className="form-group">
+          <label htmlFor="birthday">Birthday</label>
+          <input
+            required
+            type="date"
+            id="birthday"
+            name="birthday"
+            value={formData.birthday}
+            onChange={handleChange}
+          />
+        </div>
 
-        <label>Preferred Visit Time:</label>
-        <input
-          type="checkbox"
-          id="lunch"
-          name="visitTime"
-          value="lunch"
-          checked={formData.visitTime.includes("lunch")}
-          onChange={handleChange}
-        />
-        <label htmlFor="lunch">Lunch</label>
+        <div className="form-group checkbox-group">
+          <label className="group-label">Preferred Visit Time</label>
+          <div className="checkbox-options">
+            {["lunch", "dinner", "weekend"].map((time) => (
+              <div key={time} className="checkbox-item">
+                <input
+                  type="checkbox"
+                  id={time}
+                  name="visitTime"
+                  value={time}
+                  checked={formData.visitTime.includes(time)}
+                  onChange={handleChange}
+                />
+                <label htmlFor={time}>
+                  {time.charAt(0).toUpperCase() + time.slice(1)}
+                </label>
+              </div>
+            ))}
+          </div>
+        </div>
 
-        <input
-          type="checkbox"
-          id="dinner"
-          name="visitTime"
-          value="dinner"
-          checked={formData.visitTime.includes("dinner")}
-          onChange={handleChange}
-        />
-        <label htmlFor="dinner">Dinner</label>
+        <div className="form-group">
+          <label htmlFor="feedback">Your Feedback</label>
+          <textarea
+            id="feedback"
+            name="feedback"
+            placeholder="Please share your thoughts with us..."
+            value={formData.feedback}
+            onChange={handleChange}
+            required
+          ></textarea>
+        </div>
 
-        <input
-          type="checkbox"
-          id="weekend"
-          name="visitTime"
-          value="weekend"
-          checked={formData.visitTime.includes("weekend")}
-          onChange={handleChange}
-        />
-        <label htmlFor="weekend">Weekend</label>
-        <label htmlFor="feedback">Your Feedback</label>
-        <textarea
-          id="feedback"
-          name="feedback"
-          placeholder="Write your feedback here..."
-          value={formData.feedback}
-          onChange={handleChange}
-          required
-        ></textarea>
-        <button type="submit">Submit</button>
+        {message && <div className="message">{message}</div>}
+
+        <button type="submit">Submit Form</button>
       </form>
+      <Popup
+        show={showPopup}
+        onClose={() => setShowPopup(false)}
+        message="Your Free Ice-Cream is on the way! 🍨"
+      />
     </div>
   );
 };
+
 export default Form;
