@@ -1,0 +1,79 @@
+body{
+    background-color: aliceblue;
+    text-align: center;
+  }
+   
+  .container{
+    background-color: #fff;
+    border-radius: 15px;
+    box-shadow: 0 0 2px rgba(0, 0, 0, 0.2);
+    padding: 10px 20px;
+    width: 500px;  
+    text-align: center;  
+    margin: auto;
+    margin-top: 50px;
+  }
+  label{
+    font-size: 15px;
+    display: block;
+    width: 100%;
+    margin-top: 8px;
+    margin-bottom: 5px;
+    text-align: left;
+    color: #555;
+    font-weight: bold;
+  }
+  input{
+    display: block;
+    width: 100%;
+    padding: 8px;
+    box-sizing: border-box;
+    border: 1px solid #ddd;
+    border-radius: 3px;
+    font-size: 12px;
+    background-color:aliceblue;
+    color: black;
+  }
+  input[type="radio"]{
+    display: inline;
+    width: 10%;
+  
+  }
+  select{
+    display: block;
+    width: 100%;
+    margin-bottom: 15px;
+    padding: 8px;
+    box-sizing: border-box;
+    border:1px solid #ddd;
+    border-radius: 5px;
+    background-color:aliceblue;
+    color: black;
+  }
+  textarea{
+    resize: none;
+    width: 100%;
+    min-height: 100px;
+    max-height: 150px;
+    background-color:aliceblue;
+    color: black;
+  }
+  button{
+    padding:10px 50px;
+    border-radius: 8px;
+    margin:15px;
+    border: none;
+    color: white;
+    cursor: pointer;
+    background-color: #6831c2;
+    width: 40%;
+    font-size: 16px;
+  }
+  button:hover{
+    background-color: #4601b4;
+  }
+  h1{
+    font-weight: 600;
+    color: #5b2fa1;
+    font-size: 25px;
+  }
